@@ -2,19 +2,18 @@
   "schema_version": 1,
   "id": "yt-dlp__yt-dlp",
   "name": "YT-DLP Media Downloader",
-  "description": "Command-line audio/video downloader supporting thousands of media platforms.",
+  "description": "Command-line audio/video downloader supporting thousands of media platforms. Full edition only (Google Play does not allow video downloaders).",
   "owner": "yt-dlp",
   "repo": "yt-dlp",
   "category": "media",
   "runtime": "python",
   "min_ram_mb": 512,
-  "play_compatible": true,
   "execution": {
     "mode": "cli",
     "output_subdirectory": "yt-dlp"
   },
   "setup": {
-    "install_commands": ["pip install --upgrade yt-dlp"]
+    "install_commands": ["pip install --upgrade \"yt-dlp[default]\""]
   },
   "inputs": [
     {
@@ -42,6 +41,6 @@
     }
   ],
   "start": {
-    "command": "yt-dlp -f '{{FORMAT}}' -o '{{OUTPUT_DIR}}/%(title)s.%(ext)s' '{{URL}}'"
+    "command": "yt-dlp --js-runtimes node -f '{{FORMAT}}' -o '{{OUTPUT_DIR}}/%(title)s.%(ext)s' '{{URL}}'"
   }
 }
