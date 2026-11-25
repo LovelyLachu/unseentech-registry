@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "id": "stirling-tools__stirling-pdf",
+  "name": "Stirling PDF",
+  "description": "Powerful local web-based PDF manipulation tool: split, merge, convert, watermark.",
+  "owner": "Stirling-Tools",
+  "repo": "Stirling-PDF",
+  "category": "pdf",
+  "runtime": "java",
+  "min_ram_mb": 2048,
+  "offline_capable": true,
+  "execution": {
+    "mode": "webview",
+    "ready_regex": "Started \\w+ in \\d+(\\.\\d+)? seconds",
+    "fallback_port": 8080
+  },
+  "setup": {
+    "download_asset": {
+      "type": "github_release_latest",
+      "file_pattern": "^Stirling-PDF.*\\.jar$",
+      "rename_to": "Stirling-PDF.jar"
+    },
+    "install_commands": []
+  },
+  "start": { "command": "java -Dserver.port={{PORT}} -jar Stirling-PDF.jar" },
+  "ui": { "theme_color": "#1E293B", "clear_cache_on_exit": false }
+}

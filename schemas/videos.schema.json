@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://unseentech.app/schemas/videos/v1.json",
+  "title": "VideoList",
+  "description": "Master videos.json — array of Video, newest episode first.",
+  "type": "array",
+  "items": { "$ref": "https://unseentech.app/schemas/video/v1.json" }
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "id": "yt-dlp__yt-dlp",
+  "name": "YT-DLP Media Downloader",
+  "description": "Command-line audio/video downloader supporting thousands of media platforms.",
+  "owner": "yt-dlp",
+  "repo": "yt-dlp",
+  "category": "media",
+  "runtime": "python",
+  "min_ram_mb": 512,
+  "play_compatible": true,
+  "execution": {
+    "mode": "cli",
+    "output_subdirectory": "yt-dlp"
+  },
+  "setup": {
+    "install_commands": ["pip install --upgrade yt-dlp"]
+  },
+  "inputs": [
+    {
+      "key": "URL",
+      "label": "Media Source URL",
+      "type": "url",
+      "required": true,
+      "placeholder": "https://www.youtube.com/watch?v=..."
+    },
+    {
+      "key": "FORMAT",
+      "label": "Download Quality / Format",
+      "type": "select",
+      "default": "bestvideo+bestaudio/best",
+      "options": [
+        {
+          "label": "Best Available (Video + Audio)",
+          "value": "bestvideo+bestaudio/best"
+        },
+        {
+          "label": "Compact 720p Video",
+          "value": "best[height<=720]"
+        }
+      ]
+    }
+  ],
+  "start": {
+    "command": "yt-dlp -f '{{FORMAT}}' -o '{{OUTPUT_DIR}}/%(title)s.%(ext)s' '{{URL}}'"
+  }
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "episode": 43,
+    "title": "Download Any Video File at High Speed",
+    "video_url": "https://www.youtube.com/watch?v=example456",
+    "thumbnail": "https://img.youtube.com/vi/example456/maxresdefault.jpg",
+    "published_date": "2024-10-22",
+    "recipe_id": "yt-dlp__yt-dlp",
+    "github_repo": "https://github.com/yt-dlp/yt-dlp",
+    "tags": ["Media", "Downloader", "CLI"]
+  },
+  {
+    "episode": 42,
+    "title": "Process PDFs Locally Without Subscriptions",
+    "video_url": "https://www.youtube.com/watch?v=example123",
+    "thumbnail": "https://img.youtube.com/vi/example123/maxresdefault.jpg",
+    "published_date": "2024-10-15",
+    "recipe_id": "stirling-tools__stirling-pdf",
+    "github_repo": "https://github.com/Stirling-Tools/Stirling-PDF",
+    "tags": ["PDF", "Privacy", "Productivity"]
+  }
+]

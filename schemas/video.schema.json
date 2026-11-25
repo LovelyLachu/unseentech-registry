@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://unseentech.app/schemas/video/v1.json",
+  "title": "Video",
+  "description": "One Unseen Tech Tamil episode entry in videos.json.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["episode", "title", "video_url", "thumbnail", "published_date", "tags"],
+  "properties": {
+    "episode": { "type": "integer", "minimum": 1 },
+    "title": { "type": "string", "minLength": 1 },
+    "video_url": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://(www\\.)?(youtube\\.com|youtu\\.be)/"
+    },
+    "thumbnail": { "type": "string", "format": "uri" },
+    "published_date": { "type": "string", "format": "date" },
+    "recipe_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*__[a-z0-9][a-z0-9._-]*$" },
+    "github_repo": { "type": "string", "pattern": "^https://github\\.com/[^/]+/[^/]+$" },
+    "tags": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+  }
+}

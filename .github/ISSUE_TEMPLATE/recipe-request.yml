@@ -1,0 +1,15 @@
+name: Recipe request
+description: Ask for a GitHub tool to be added to the verified registry
+labels: [recipe]
+body:
+  - type: input
+    id: repo
+    attributes:
+      label: GitHub repository URL
+      placeholder: https://github.com/owner/repo
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: What do you use it for?

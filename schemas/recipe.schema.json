@@ -1,0 +1,358 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://unseentech.app/schemas/recipe/v1.json",
+  "title": "Recipe",
+  "description": "Unseen Tech tool recipe (v1). Canonical contract shared by the Android app, the web hub and the registry. File name in registry: <owner>__<repo>.json (lower-case).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "name",
+    "description",
+    "owner",
+    "repo",
+    "runtime",
+    "min_ram_mb",
+    "execution",
+    "setup",
+    "start"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "description": "Lower-case <owner>__<repo>.",
+      "pattern": "^[a-z0-9][a-z0-9._-]*__[a-z0-9][a-z0-9._-]*$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500
+    },
+    "owner": {
+      "type": "string",
+      "minLength": 1
+    },
+    "repo": {
+      "type": "string",
+      "minLength": 1
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "pdf",
+        "media",
+        "privacy",
+        "converter",
+        "developer",
+        "productivity",
+        "ai",
+        "files",
+        "network",
+        "other"
+      ]
+    },
+    "runtime": {
+      "$ref": "#/$defs/runtime"
+    },
+    "min_ram_mb": {
+      "type": "integer",
+      "minimum": 128,
+      "maximum": 16384
+    },
+    "min_storage_mb": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "verified": {
+      "type": "boolean",
+      "description": "Set ONLY by registry maintainers. Clients must ignore this on pasted/unverified recipes."
+    },
+    "play_compatible": {
+      "type": "boolean",
+      "default": false,
+      "description": "Set ONLY by registry maintainers after policy review. True ⇒ recipe may run in the Google Play build: interpreted code only, no downloaded binaries/JARs/native packages (ADR-0007)."
+    },
+    "offline_capable": {
+      "type": "boolean",
+      "default": false
+    },
+    "execution": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/executionWebview"
+        },
+        {
+          "$ref": "#/$defs/executionCli"
+        }
+      ]
+    },
+    "setup": {
+      "$ref": "#/$defs/setup"
+    },
+    "inputs": {
+      "type": "array",
+      "description": "Required when execution.mode is 'cli'.",
+      "items": {
+        "$ref": "#/$defs/input"
+      }
+    },
+    "start": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["command"],
+      "properties": {
+        "command": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Shell command. Placeholders: {{PORT}}, {{OUTPUT_DIR}}, {{INPUT_DIR}}, and {{<INPUT_KEY>}}."
+        },
+        "env": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "ui": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "theme_color": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$"
+        },
+        "clear_cache_on_exit": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "permissions": {
+      "type": "object",
+      "description": "WebView permissions; all default to false (security guardrail #4).",
+      "additionalProperties": false,
+      "properties": {
+        "camera": {
+          "type": "boolean",
+          "default": false
+        },
+        "microphone": {
+          "type": "boolean",
+          "default": false
+        },
+        "geolocation": {
+          "type": "boolean",
+          "default": false
+        },
+        "clipboard_read": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "type": "object",
+        "required": ["execution"],
+        "properties": {
+          "execution": {
+            "type": "object",
+            "required": ["mode"],
+            "properties": {
+              "mode": {
+                "const": "cli"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "required": ["inputs"],
+        "properties": {
+          "inputs": {
+            "type": "array",
+            "minItems": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "type": "object",
+        "required": ["play_compatible"],
+        "properties": {
+          "play_compatible": {
+            "const": true
+          }
+        }
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "runtime": {
+            "enum": ["python", "node", "java"]
+          },
+          "setup": {
+            "type": "object",
+            "not": {
+              "type": "object",
+              "required": ["download_asset"],
+              "properties": {
+                "download_asset": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "runtime": {
+      "type": "string",
+      "enum": ["python", "node", "java", "binary"]
+    },
+    "executionWebview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "fallback_port"],
+      "properties": {
+        "mode": {
+          "const": "webview"
+        },
+        "port_regex": {
+          "type": "string",
+          "description": "Regex with ONE capture group for the port, applied to stdout/stderr. Defaults to the built-in localhost/127.0.0.1 patterns."
+        },
+        "ready_regex": {
+          "type": "string",
+          "description": "Regex that signals the server is ready (no capture). Optional; HTTP 200 polling is always performed."
+        },
+        "fallback_port": {
+          "type": "integer",
+          "minimum": 1024,
+          "maximum": 65535
+        },
+        "health_path": {
+          "type": "string",
+          "default": "/",
+          "pattern": "^/"
+        }
+      }
+    },
+    "executionCli": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode"],
+      "properties": {
+        "mode": {
+          "const": "cli"
+        },
+        "output_subdirectory": {
+          "type": "string",
+          "description": "Sub-folder under Download/UnseenTech/ (written via MediaStore). Absolute paths are NOT allowed.",
+          "pattern": "^[A-Za-z0-9 _-]*$"
+        }
+      }
+    },
+    "setup": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "download_asset": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "file_pattern"],
+          "properties": {
+            "type": {
+              "enum": ["github_release_latest", "github_release_tag"]
+            },
+            "tag": {
+              "type": "string"
+            },
+            "file_pattern": {
+              "type": "string",
+              "description": "Regex matched against release asset names."
+            },
+            "rename_to": {
+              "type": "string"
+            }
+          }
+        },
+        "clone": {
+          "type": "boolean",
+          "default": false
+        },
+        "install_commands": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        }
+      }
+    },
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key", "label", "type"],
+      "properties": {
+        "key": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_]*$"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "enum": ["text", "url", "number", "select", "file", "toggle"]
+        },
+        "required": {
+          "type": "boolean",
+          "default": false
+        },
+        "placeholder": {
+          "type": "string"
+        },
+        "default": {
+          "type": ["string", "number", "boolean"]
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["label", "value"],
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "accept": {
+          "type": "array",
+          "description": "MIME types for type=file (picked via SAF).",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

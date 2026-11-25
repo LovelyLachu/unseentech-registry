@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://unseentech.app/schemas/video-page/v1.json",
+  "title": "VideoPage",
+  "description": "Generated slice pages/page-<n>.json (10 items per page). Produced by @unseentech/registry-tools paginate.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["page", "page_size", "total_pages", "total_items", "items"],
+  "properties": {
+    "page": { "type": "integer", "minimum": 1 },
+    "page_size": { "type": "integer", "minimum": 1 },
+    "total_pages": { "type": "integer", "minimum": 1 },
+    "total_items": { "type": "integer", "minimum": 0 },
+    "items": {
+      "type": "array",
+      "items": { "$ref": "https://unseentech.app/schemas/video/v1.json" }
+    }
+  }
+}

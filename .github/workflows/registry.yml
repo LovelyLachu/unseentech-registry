@@ -1,0 +1,28 @@
+# Lives in the PUBLIC `unseentech-registry` repo. Self-contained: uses tools/registry-cli.mjs
+# (pushed by the private launcher repo's sync-registry.yml) — no access to private code needed.
+name: Registry
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 26.13.1
+      - run: node tools/registry-cli.mjs validate recipes
+      - run: node tools/registry-cli.mjs paginate videos.json pages
+      - if: github.event_name == 'push'
+        run: |
+          git config user.name "registry-bot"
+          git config user.email "registry-bot@users.noreply.github.com"
+          git add pages
+          git diff --cached --quiet || { git commit -m "chore(registry): regenerate pages [skip ci]"; git push; }
