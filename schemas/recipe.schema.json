@@ -134,6 +134,11 @@
         "clear_cache_on_exit": {
           "type": "boolean",
           "default": false
+        },
+        "open_in": {
+          "enum": ["app", "browser"],
+          "default": "app",
+          "description": "Web-UI tools: show the page inside the app, or in the phone's browser (feature 006)."
         }
       }
     },
@@ -287,6 +292,11 @@
             },
             "rename_to": {
               "type": "string"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "description": "SHA-256 of the release file. The app only downloads pinned (github_release_tag) files with a sha256 (feature 006)."
             }
           }
         },

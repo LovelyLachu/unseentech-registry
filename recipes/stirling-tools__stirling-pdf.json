@@ -2,26 +2,36 @@
   "schema_version": 1,
   "id": "stirling-tools__stirling-pdf",
   "name": "Stirling PDF",
-  "description": "Powerful local web-based PDF manipulation tool: split, merge, convert, watermark.",
+  "description": "Merge, split, rotate, compress and convert PDFs — the popular open-source Stirling PDF, running entirely on your phone (nothing is uploaded). Opens in your browser.",
   "owner": "Stirling-Tools",
   "repo": "Stirling-PDF",
   "category": "pdf",
   "runtime": "java",
-  "min_ram_mb": 2048,
+  "min_ram_mb": 1536,
   "offline_capable": true,
   "execution": {
     "mode": "webview",
+    "fallback_port": 8080,
     "ready_regex": "Started \\w+ in \\d+(\\.\\d+)? seconds",
-    "fallback_port": 8080
+    "health_path": "/"
   },
   "setup": {
     "download_asset": {
-      "type": "github_release_latest",
-      "file_pattern": "^Stirling-PDF.*\\.jar$",
-      "rename_to": "Stirling-PDF.jar"
+      "type": "github_release_tag",
+      "tag": "v2.11.0",
+      "file_pattern": "^Stirling-PDF\\.jar$",
+      "rename_to": "Stirling-PDF.jar",
+      "sha256": "9f240b50180979206ae72604101bf444c3cc5f573577419aaf5f97055d82ebbd"
     },
     "install_commands": []
   },
-  "start": { "command": "java -Dserver.port={{PORT}} -jar Stirling-PDF.jar" },
-  "ui": { "theme_color": "#1E293B", "clear_cache_on_exit": false }
+  "start": {
+    "command": "java -Xmx768m -XX:+UseSerialGC -Djava.awt.headless=true -Dserver.address=127.0.0.1 -Dserver.port={{PORT}} -jar Stirling-PDF.jar"
+  },
+  "ui": {
+    "theme_color": "#1E293B",
+    "open_in": "browser"
+  },
+  "min_storage_mb": 600,
+  "verified": true
 }

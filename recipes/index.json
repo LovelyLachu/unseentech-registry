@@ -15,13 +15,13 @@
     {
       "id": "stirling-tools__stirling-pdf",
       "name": "Stirling PDF",
-      "summary": "Powerful local web-based PDF manipulation tool: split, merge, convert, watermark.",
+      "summary": "Merge, split, rotate, compress and convert PDFs — the popular open-source Stirling PDF, running entirely on your phone (nothing is uploaded…",
       "category": "pdf",
       "runtime": "java",
       "mode": "webview",
-      "verified": false,
+      "verified": true,
       "play_compatible": false,
-      "sha256": "da9eca1d655c9fefe95a9dd7d5ab766a62f1f02e3d430a844173ae2e644ad6bd"
+      "sha256": "a8233dcc44ded8acdf7bae15253cbb6948656af8b847a8dbdda941bb12ca6f82"
     },
     {
       "id": "tiddlywiki__tiddlywiki5",
