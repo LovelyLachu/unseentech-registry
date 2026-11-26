@@ -2,6 +2,17 @@
   "schema_version": 1,
   "recipes": [
     {
+      "id": "ffmpeg__ffmpeg",
+      "name": "Extract audio",
+      "summary": "Pull the sound out of a video on your phone and save it as an M4A audio file — music, a talk, a lecture.",
+      "category": "media",
+      "runtime": "binary",
+      "mode": "cli",
+      "verified": true,
+      "play_compatible": false,
+      "sha256": "c9e3508d597826c4898343ef51b81f84006d68422238721a42095dfb3742e6e6"
+    },
+    {
       "id": "stirling-tools__stirling-pdf",
       "name": "Stirling PDF",
       "summary": "Powerful local web-based PDF manipulation tool: split, merge, convert, watermark.",

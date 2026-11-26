@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "id": "ffmpeg__ffmpeg",
+  "name": "Extract audio",
+  "description": "Pull the sound out of a video on your phone and save it as an M4A audio file — music, a talk, a lecture. Works offline with the FFmpeg engine built into Unseen Tech Launcher.",
+  "owner": "FFmpeg",
+  "repo": "FFmpeg",
+  "category": "media",
+  "runtime": "binary",
+  "min_ram_mb": 256,
+  "verified": true,
+  "play_compatible": false,
+  "offline_capable": true,
+  "execution": {
+    "mode": "cli",
+    "output_subdirectory": "Extract audio"
+  },
+  "setup": {},
+  "inputs": [
+    {
+      "key": "VIDEO",
+      "label": "Video",
+      "type": "file",
+      "required": true,
+      "accept": [
+        "video/*"
+      ]
+    },
+    {
+      "key": "AUDIO",
+      "label": "Audio quality",
+      "type": "select",
+      "default": "aac",
+      "options": [
+        {
+          "label": "AAC 128 kbps — works for every video",
+          "value": "aac"
+        },
+        {
+          "label": "Keep original audio — fastest (MP4 videos)",
+          "value": "copy"
+        }
+      ]
+    }
+  ],
+  "start": {
+    "command": "ffmpeg -hide_banner -nostdin -y -i {{VIDEO}} -vn -c:a {{AUDIO}} -b:a 128k -movflags +faststart {{OUTPUT_DIR}}/{{VIDEO_NAME}}.m4a"
+  }
+}
