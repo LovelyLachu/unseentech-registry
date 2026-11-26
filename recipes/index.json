@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "recipes": [
+    {
+      "id": "stirling-tools__stirling-pdf",
+      "name": "Stirling PDF",
+      "summary": "Powerful local web-based PDF manipulation tool: split, merge, convert, watermark.",
+      "category": "pdf",
+      "runtime": "java",
+      "mode": "webview",
+      "verified": false,
+      "play_compatible": false,
+      "sha256": "da9eca1d655c9fefe95a9dd7d5ab766a62f1f02e3d430a844173ae2e644ad6bd"
+    },
+    {
+      "id": "yt-dlp__yt-dlp",
+      "name": "YT-DLP Media Downloader",
+      "summary": "Command-line audio/video downloader supporting thousands of media platforms.",
+      "category": "media",
+      "runtime": "python",
+      "mode": "cli",
+      "verified": true,
+      "play_compatible": false,
+      "sha256": "8bca897221500ffd75c6483f810378ec8481cd04a7ee2f64ada1394001880517"
+    }
+  ]
+}

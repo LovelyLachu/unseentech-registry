@@ -20,9 +20,14 @@ jobs:
           node-version: 26.13.1
       - run: node tools/registry-cli.mjs validate recipes
       - run: node tools/registry-cli.mjs paginate videos.json pages
+      # Catalog index with a sha256 per recipe (app verifies CDN copies against it, feature 002).
+      - run: node tools/registry-cli.mjs index recipes recipes/index.json
+      - name: Index must be up to date in pull requests
+        if: github.event_name == 'pull_request'
+        run: git diff --exit-code -- recipes/index.json || { echo "::error::run 'node tools/registry-cli.mjs index recipes recipes/index.json' and commit"; exit 1; }
       - if: github.event_name == 'push'
         run: |
           git config user.name "registry-bot"
           git config user.email "registry-bot@users.noreply.github.com"
-          git add pages
-          git diff --cached --quiet || { git commit -m "chore(registry): regenerate pages [skip ci]"; git push; }
+          git add pages recipes/index.json
+          git diff --cached --quiet || { git commit -m "chore(registry): regenerate pages and index [skip ci]"; git push; }
