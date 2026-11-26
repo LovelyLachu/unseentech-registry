@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "id": "tiddlywiki__tiddlywiki5",
+  "name": "TiddlyWiki",
+  "description": "A personal notebook and wiki that runs fully offline on your phone: write notes, link and tag them, search everything. Your notes stay in the tool's private workspace.",
+  "owner": "TiddlyWiki",
+  "repo": "TiddlyWiki5",
+  "category": "productivity",
+  "runtime": "node",
+  "min_ram_mb": 256,
+  "min_storage_mb": 60,
+  "verified": true,
+  "play_compatible": false,
+  "offline_capable": true,
+  "execution": {
+    "mode": "webview",
+    "fallback_port": 8080,
+    "ready_regex": "Serving on https?://",
+    "health_path": "/"
+  },
+  "setup": {
+    "install_commands": [
+      "npm install -g tiddlywiki",
+      "[ -d wiki ] || tiddlywiki wiki --init server"
+    ]
+  },
+  "inputs": [],
+  "start": {
+    "command": "tiddlywiki wiki --listen host=127.0.0.1 port={{PORT}}"
+  },
+  "ui": {
+    "theme_color": "#1E293B"
+  }
+}

@@ -13,6 +13,17 @@
       "sha256": "da9eca1d655c9fefe95a9dd7d5ab766a62f1f02e3d430a844173ae2e644ad6bd"
     },
     {
+      "id": "tiddlywiki__tiddlywiki5",
+      "name": "TiddlyWiki",
+      "summary": "A personal notebook and wiki that runs fully offline on your phone: write notes, link and tag them, search everything.",
+      "category": "productivity",
+      "runtime": "node",
+      "mode": "webview",
+      "verified": true,
+      "play_compatible": false,
+      "sha256": "6737eed181c92f9587c4687c81b07ec48210bb144aea3f06eecdc3f2704778c5"
+    },
+    {
       "id": "yt-dlp__yt-dlp",
       "name": "YT-DLP Media Downloader",
       "summary": "Command-line audio/video downloader supporting thousands of media platforms.",
