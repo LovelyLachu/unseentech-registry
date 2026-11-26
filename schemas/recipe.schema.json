@@ -340,7 +340,9 @@
                 "type": "string"
               },
               "value": {
-                "type": "string"
+                "type": "string",
+                "pattern": "^\\S+$",
+                "description": "Passed to the tool as exactly ONE argument (no whitespace) — see specs/002-recipe-engine/contracts/command-template.md."
               }
             }
           }
