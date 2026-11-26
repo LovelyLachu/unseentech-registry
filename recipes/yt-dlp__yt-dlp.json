@@ -8,6 +8,7 @@
   "category": "media",
   "runtime": "python",
   "min_ram_mb": 512,
+  "verified": true,
   "execution": {
     "mode": "cli",
     "output_subdirectory": "yt-dlp"
