@@ -8486,9 +8486,10 @@ var recipeSchema = {
         },
         "accept": {
           "type": "array",
-          "description": "MIME types for type=file (picked via SAF).",
+          "description": "Media types for type=file (system picker filter), e.g. video/* or application/pdf.",
           "items": {
-            "type": "string"
+            "type": "string",
+            "pattern": "^[a-z*]+/[a-zA-Z0-9.+*-]+$"
           }
         }
       }
