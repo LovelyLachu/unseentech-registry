@@ -44,6 +44,6 @@
     }
   ],
   "start": {
-    "command": "ffmpeg -hide_banner -nostdin -y -i {{VIDEO}} -vn -c:a {{AUDIO}} -b:a 128k -movflags +faststart {{OUTPUT_DIR}}/{{VIDEO_NAME}}.m4a"
+    "command": "ffmpeg -hide_banner -nostdin -y -i {{VIDEO}} -vn -c:a {{AUDIO}} -b:a 128k -movflags +faststart -f mp4 {{OUTPUT_DIR}}/{{VIDEO_NAME}}.m4a"
   }
 }
